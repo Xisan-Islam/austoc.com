@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, ShoppingCart, Star, Eye, Sparkles } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Eye, Sparkles, Crown, Gem } from 'lucide-react';
 import { Product } from '../../types';
 import { useCart } from '../../contexts/CartContext';
 import toast from 'react-hot-toast';
@@ -55,27 +55,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           <motion.button
             whileHover={{ scale: 1.2, rotate: 10 }}
             whileTap={{ scale: 0.9 }}
-            className="p-4 glass-effect rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300"
+            className="p-4 glass-effect rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300 group/btn"
           >
-            <Heart className="h-5 w-5 text-white" />
+            <Heart className="h-5 w-5 text-white group-hover/btn:text-red-400 transition-colors duration-300" />
           </motion.button>
           
           <motion.button
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             onClick={handleAddToCart}
-            className="p-4 bg-gradient-to-r from-accent-purple to-accent-blue rounded-full shadow-lg hover:shadow-accent-purple/50 transition-all duration-300"
+            className="p-4 bg-gradient-to-r from-accent-purple to-accent-blue rounded-full shadow-lg hover:shadow-accent-purple/50 transition-all duration-300 relative overflow-hidden group/btn"
           >
-            <ShoppingCart className="h-5 w-5 text-white" />
+            <ShoppingCart className="h-5 w-5 text-white relative z-10" />
+            <motion.div
+              className="absolute inset-0 bg-white/20"
+              initial={{ scale: 0 }}
+              whileHover={{ scale: 1 }}
+              transition={{ duration: 0.3 }}
+            />
           </motion.button>
           
           <Link to={`/product/${product.id}`}>
             <motion.button
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
-              className="p-4 glass-effect rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300"
+              className="p-4 glass-effect rounded-full shadow-lg backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300 group/btn"
             >
-              <Eye className="h-5 w-5 text-white" />
+              <Eye className="h-5 w-5 text-white group-hover/btn:text-accent-blue transition-colors duration-300" />
             </motion.button>
           </Link>
         </div>
@@ -89,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
               transition={{ delay: 0.3 }}
               className="bg-gradient-to-r from-accent-purple to-accent-blue text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 shadow-lg"
             >
-              <Sparkles className="h-3 w-3" />
+              <Crown className="h-3 w-3" />
               <span>Featured</span>
             </motion.span>
           )}
@@ -105,6 +111,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
           )}
         </div>
 
+        {/* Premium Badge */}
+        <div className="absolute top-4 right-4">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="w-8 h-8 bg-gradient-to-r from-accent-gold to-yellow-500 rounded-full flex items-center justify-center shadow-lg"
+          >
+            <Gem className="h-4 w-4 text-white" />
+          </motion.div>
+        </div>
+
         {/* Stock Badge */}
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-sm">
@@ -118,8 +135,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
       {/* Content */}
       <div className="p-6">
         <div className="mb-3">
-          <span className="text-sm text-accent-purple font-medium tracking-wide uppercase">
-            {product.category}
+          <span className="text-sm text-accent-purple font-medium tracking-wide uppercase flex items-center space-x-1">
+            <Sparkles className="h-3 w-3" />
+            <span>{product.category}</span>
           </span>
         </div>
         
@@ -133,14 +151,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
         <div className="flex items-center space-x-3 mb-4">
           <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
-              <Star
+              <motion.div
                 key={i}
-                className={`h-4 w-4 ${
-                  i < Math.floor(product.rating)
-                    ? 'text-yellow-400 fill-current'
-                    : 'text-white/30'
-                }`}
-              />
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+              >
+                <Star
+                  className={`h-4 w-4 ${
+                    i < Math.floor(product.rating)
+                      ? 'text-yellow-400 fill-current'
+                      : 'text-white/30'
+                  }`}
+                />
+              </motion.div>
             ))}
           </div>
           <span className="text-sm text-white/60">
@@ -151,9 +175,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
         {/* Price */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-white glow-text">
+            <motion.span 
+              className="text-2xl font-bold text-white glow-text"
+              whileHover={{ scale: 1.05 }}
+            >
               ${product.price}
-            </span>
+            </motion.span>
             {product.originalPrice && (
               <span className="text-sm text-white/50 line-through">
                 ${product.originalPrice}
@@ -166,13 +193,44 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, index = 0 }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleAddToCart}
-              className="px-4 py-2 bg-gradient-to-r from-accent-purple to-accent-blue text-white rounded-xl hover:shadow-lg hover:shadow-accent-purple/25 transition-all duration-300 text-sm font-medium"
+              className="px-4 py-2 bg-gradient-to-r from-accent-purple to-accent-blue text-white rounded-xl hover:shadow-lg hover:shadow-accent-purple/25 transition-all duration-300 text-sm font-medium relative overflow-hidden group/btn"
             >
-              Add to Cart
+              <span className="relative z-10">Add to Cart</span>
+              <motion.div
+                className="absolute inset-0 bg-white/20"
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.button>
           )}
         </div>
+
+        {/* Premium Indicator */}
+        <motion.div
+          className="mt-4 pt-4 border-t border-white/10 flex items-center justify-center space-x-2 text-xs text-white/60"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Crown className="h-3 w-3 text-accent-gold" />
+          <span>Premium Quality Guaranteed</span>
+          <Gem className="h-3 w-3 text-accent-blue" />
+        </motion.div>
       </div>
+
+      {/* Hover Glow Effect */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-accent-purple/10 via-accent-blue/10 to-accent-cyan/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        animate={{
+          background: [
+            'linear-gradient(45deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1))',
+            'linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1))',
+            'linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1))',
+          ],
+        }}
+        transition={{ duration: 3, repeat: Infinity }}
+      />
     </motion.div>
   );
 };

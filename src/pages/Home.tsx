@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Truck, Shield, Award, RefreshCw, Star, TrendingUp, Users, Package, Heart, Zap, Play, Sparkles } from 'lucide-react';
+import { ArrowRight, Truck, Shield, Award, RefreshCw, Star, TrendingUp, Users, Package, Heart, Zap, Play, Sparkles, Crown, Gem, Diamond } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import ProductCard from '../components/UI/ProductCard';
 import AnimatedButton from '../components/UI/AnimatedButton';
@@ -20,6 +20,7 @@ import { products } from '../data/products';
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const featuredProducts = products.filter(product => product.featured);
   
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -72,23 +73,117 @@ const Home: React.FC = () => {
     { number: 24, label: 'Concierge Support', suffix: '/7', icon: <Zap className="h-8 w-8 text-white" /> },
   ];
 
+  const testimonials = [
+    {
+      name: 'Sarah Johnson',
+      role: 'Fashion Designer',
+      content: 'Austoc has redefined luxury shopping for me. The quality and service are unmatched.',
+      avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
+    },
+    {
+      name: 'Michael Chen',
+      role: 'Tech Executive',
+      content: 'The attention to detail and premium experience make every purchase feel special.',
+      avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
+    },
+    {
+      name: 'Emma Rodriguez',
+      role: 'Interior Designer',
+      content: 'From packaging to delivery, everything screams luxury. Absolutely love it!',
+      avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+      rating: 5
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const carouselSlides = [
-    <div key="slide1" className="relative h-96 bg-gradient-to-r from-accent-purple to-accent-blue rounded-2xl flex items-center justify-center">
-      <div className="text-center text-white">
-        <h3 className="text-3xl font-bold mb-4">Luxury Collection 2024</h3>
-        <p className="text-xl opacity-90">Discover the finest curated pieces</p>
+    <div key="slide1" className="relative h-96 bg-gradient-to-r from-accent-purple to-accent-blue rounded-3xl flex items-center justify-center overflow-hidden">
+      <motion.div
+        className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+      <div className="text-center text-white relative z-10">
+        <motion.h3 
+          className="text-4xl font-bold mb-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Luxury Collection 2024
+        </motion.h3>
+        <motion.p 
+          className="text-xl opacity-90"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Discover the finest curated pieces
+        </motion.p>
       </div>
     </div>,
-    <div key="slide2" className="relative h-96 bg-gradient-to-r from-accent-blue to-accent-cyan rounded-2xl flex items-center justify-center">
-      <div className="text-center text-white">
-        <h3 className="text-3xl font-bold mb-4">Exclusive Designs</h3>
-        <p className="text-xl opacity-90">Limited edition masterpieces</p>
+    <div key="slide2" className="relative h-96 bg-gradient-to-r from-accent-blue to-accent-cyan rounded-3xl flex items-center justify-center overflow-hidden">
+      <motion.div
+        className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+      <div className="text-center text-white relative z-10">
+        <motion.h3 
+          className="text-4xl font-bold mb-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Exclusive Designs
+        </motion.h3>
+        <motion.p 
+          className="text-xl opacity-90"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Limited edition masterpieces
+        </motion.p>
       </div>
     </div>,
-    <div key="slide3" className="relative h-96 bg-gradient-to-r from-accent-cyan to-accent-pink rounded-2xl flex items-center justify-center">
-      <div className="text-center text-white">
-        <h3 className="text-3xl font-bold mb-4">Premium Quality</h3>
-        <p className="text-xl opacity-90">Uncompromising excellence</p>
+    <div key="slide3" className="relative h-96 bg-gradient-to-r from-accent-cyan to-accent-pink rounded-3xl flex items-center justify-center overflow-hidden">
+      <motion.div
+        className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+      <div className="text-center text-white relative z-10">
+        <motion.h3 
+          className="text-4xl font-bold mb-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Premium Quality
+        </motion.h3>
+        <motion.p 
+          className="text-xl opacity-90"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Uncompromising excellence
+        </motion.p>
       </div>
     </div>,
   ];
@@ -99,7 +194,7 @@ const Home: React.FC = () => {
       label: 'Featured',
       icon: <Sparkles className="h-4 w-4" />,
       content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProducts.slice(0, 3).map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
@@ -111,7 +206,7 @@ const Home: React.FC = () => {
       label: 'Trending',
       icon: <TrendingUp className="h-4 w-4" />,
       content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.slice(0, 3).map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
@@ -121,12 +216,21 @@ const Home: React.FC = () => {
     {
       id: 'exclusive',
       label: 'Exclusive',
-      icon: <Award className="h-4 w-4" />,
+      icon: <Crown className="h-4 w-4" />,
       content: (
         <div className="text-center py-12">
-          <h3 className="text-2xl font-bold text-white mb-4">Exclusive Collections</h3>
-          <p className="text-white/70 mb-6">Access our most exclusive luxury items</p>
-          <AnimatedButton variant="glow">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="w-24 h-24 bg-gradient-to-r from-accent-purple to-accent-blue rounded-full flex items-center justify-center mx-auto mb-6"
+          >
+            <Crown className="h-12 w-12 text-white" />
+          </motion.div>
+          <h3 className="text-3xl font-bold text-white mb-4">Exclusive Collections</h3>
+          <p className="text-white/70 mb-8 text-lg">Access our most exclusive luxury items</p>
+          <AnimatedButton variant="glow" size="lg">
+            <Crown className="mr-2 h-5 w-5" />
             Explore Exclusive Items
           </AnimatedButton>
         </div>
@@ -198,30 +302,53 @@ const Home: React.FC = () => {
         
         {/* Hero Section */}
         <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          {/* Animated Background */}
+          <motion.div
+            className="absolute inset-0 opacity-30"
+            animate={{
+              background: [
+                'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)',
+                'radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)',
+                'radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)',
+                'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)',
+              ],
+            }}
+            transition={{ duration: 10, repeat: Infinity }}
+          />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <ScrollAnimation animation="slideRight" duration={1}>
-                <div className="space-y-8 z-10 relative">
+                <div className="space-y-8">
                   <div className="space-y-6">
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       animate={heroInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 1, delay: 0.2 }}
-                      className="inline-block px-4 py-2 glass-effect rounded-full border border-white/20"
+                      className="inline-flex items-center space-x-2 px-6 py-3 glass-effect rounded-full border border-white/20"
                     >
-                      <span className="text-white/80 text-sm font-medium">✨ Luxury Redefined</span>
+                      <Sparkles className="h-4 w-4 text-accent-purple" />
+                      <span className="text-white/80 text-sm font-medium">Luxury Redefined</span>
+                      <Crown className="h-4 w-4 text-accent-gold" />
                     </motion.div>
                     
                     <motion.h1
                       initial={{ opacity: 0, y: 30 }}
                       animate={heroInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 1, delay: 0.4 }}
-                      className="text-6xl lg:text-8xl font-bold font-display text-white leading-tight"
+                      className="text-5xl sm:text-6xl lg:text-8xl font-bold font-display text-white leading-tight"
                     >
                       Discover
                       <br />
-                      <span className="bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-clip-text text-transparent glow-text">
+                      <span className="bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-clip-text text-transparent glow-text relative">
                         Luxury
+                        <motion.div
+                          className="absolute -top-4 -right-4"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        >
+                          <Diamond className="h-8 w-8 text-accent-gold" />
+                        </motion.div>
                       </span>
                       <br />
                       Redefined
@@ -233,7 +360,7 @@ const Home: React.FC = () => {
                       transition={{ duration: 1, delay: 0.6 }}
                       className="text-xl lg:text-2xl text-white/70 max-w-2xl leading-relaxed font-light"
                     >
-                      Experience the pinnacle of sophistication with our curated collection of premium products. Where exclusivity meets innovation.
+                      Experience the pinnacle of sophistication with our curated collection of premium products. Where exclusivity meets innovation in perfect harmony.
                     </motion.p>
                   </div>
 
@@ -247,9 +374,10 @@ const Home: React.FC = () => {
                       <AnimatedButton 
                         size="lg" 
                         variant="glow"
-                        className="group"
+                        className="group text-lg px-8 py-4"
                         glowColor="rgba(139, 92, 246, 0.6)"
                       >
+                        <Gem className="mr-2 h-5 w-5" />
                         Explore Collection
                         <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                       </AnimatedButton>
@@ -258,7 +386,7 @@ const Home: React.FC = () => {
                       variant="outline" 
                       size="lg" 
                       onClick={() => setShowVideoModal(true)}
-                      className="border-white/30 text-white hover:bg-white/10"
+                      className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-4"
                     >
                       <Play className="mr-2 h-5 w-5" />
                       Watch Story
@@ -266,22 +394,29 @@ const Home: React.FC = () => {
                   </motion.div>
 
                   <ScrollAnimation animation="fadeIn" delay={1}>
-                    <div className="flex items-center space-x-8 text-sm text-white/60">
-                      <div className="flex items-center space-x-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm text-white/60">
+                      <div className="flex items-center space-x-3">
                         <div className="flex -space-x-2">
                           {[1, 2, 3, 4].map((i) => (
                             <motion.div 
                               key={i} 
-                              className="w-8 h-8 rounded-full bg-gradient-to-r from-accent-purple to-accent-blue border-2 border-white/20"
+                              className="w-10 h-10 rounded-full bg-gradient-to-r from-accent-purple to-accent-blue border-2 border-white/20"
                               whileHover={{ scale: 1.2, zIndex: 10 }}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 1.2 + i * 0.1 }}
                             />
                           ))}
                         </div>
-                        <span>50K+ Elite Members</span>
+                        <span className="font-medium">50K+ Elite Members</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Star className="h-5 w-5 text-yellow-400 fill-current" />
-                        <span>4.9/5 Luxury Rating</span>
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                          ))}
+                        </div>
+                        <span className="font-medium">4.9/5 Luxury Rating</span>
                       </div>
                     </div>
                   </ScrollAnimation>
@@ -289,7 +424,7 @@ const Home: React.FC = () => {
               </ScrollAnimation>
 
               <ScrollAnimation animation="slideLeft" duration={1} delay={0.4}>
-                <div className="relative z-10">
+                <div className="relative">
                   <InteractiveCard animation="morph" trigger="hover">
                     <div className="relative">
                       <motion.div
@@ -317,12 +452,12 @@ const Home: React.FC = () => {
                         animation="slide" 
                         trigger="auto" 
                         delay={1}
-                        className="absolute top-10 -left-10"
+                        className="absolute top-10 -left-10 hidden lg:block"
                       >
                         <NeumorphicCard size="sm" className="p-4">
                           <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-gradient-to-r from-accent-purple to-accent-blue rounded-xl flex items-center justify-center">
-                              <Truck className="h-5 w-5 text-white" />
+                            <div className="w-12 h-12 bg-gradient-to-r from-accent-purple to-accent-blue rounded-xl flex items-center justify-center">
+                              <Truck className="h-6 w-6 text-white" />
                             </div>
                             <div>
                               <p className="font-semibold text-white text-sm">Premium Delivery</p>
@@ -336,12 +471,12 @@ const Home: React.FC = () => {
                         animation="slide" 
                         trigger="auto" 
                         delay={2}
-                        className="absolute bottom-10 -right-10"
+                        className="absolute bottom-10 -right-10 hidden lg:block"
                       >
                         <NeumorphicCard size="sm" className="p-4">
                           <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-gradient-to-r from-accent-cyan to-accent-pink rounded-xl flex items-center justify-center">
-                              <Award className="h-5 w-5 text-white" />
+                            <div className="w-12 h-12 bg-gradient-to-r from-accent-cyan to-accent-pink rounded-xl flex items-center justify-center">
+                              <Crown className="h-6 w-6 text-white" />
                             </div>
                             <div>
                               <p className="font-semibold text-white text-sm">Exclusive Access</p>
@@ -363,6 +498,16 @@ const Home: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollAnimation animation="slideUp" duration={1}>
               <div className="text-center mb-20">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.6 }}
+                  className="inline-flex items-center space-x-2 mb-6"
+                >
+                  <Gem className="h-8 w-8 text-accent-purple" />
+                  <span className="text-accent-purple font-semibold text-lg">Premium Experience</span>
+                  <Gem className="h-8 w-8 text-accent-blue" />
+                </motion.div>
                 <h2 className="text-4xl lg:text-6xl font-bold font-display text-white mb-6 glow-text">
                   The Austoc Experience
                 </h2>
@@ -386,34 +531,26 @@ const Home: React.FC = () => {
                       animation="scale" 
                       trigger="hover"
                       className="h-full"
-                      backContent={
-                        <NeumorphicCard className="h-full p-6 text-center">
-                          <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                            <Icon className="h-8 w-8 text-white" />
-                          </div>
-                          <h3 className="text-lg font-semibold text-white mb-3">
-                            {feature.title}
-                          </h3>
-                          <p className="text-white/70 text-sm leading-relaxed">
-                            {feature.details}
-                          </p>
-                        </NeumorphicCard>
-                      }
                     >
-                      <NeumorphicCard className="h-full p-8 text-center group">
+                      <NeumorphicCard className="h-full p-8 text-center group hover:bg-white/5 transition-all duration-500">
                         <motion.div 
-                          className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg`}
+                          className={`w-20 h-20 bg-gradient-to-r ${feature.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 shadow-2xl`}
                           whileHover={{ rotate: 360 }}
                           transition={{ duration: 0.6 }}
                         >
-                          <Icon className="h-8 w-8 text-white" />
+                          <Icon className="h-10 w-10 text-white" />
                         </motion.div>
-                        <h3 className="text-xl font-semibold text-white mb-3">
+                        <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-accent-purple transition-colors duration-300">
                           {feature.title}
                         </h3>
-                        <p className="text-white/70 leading-relaxed">
+                        <p className="text-white/70 leading-relaxed mb-4">
                           {feature.description}
                         </p>
+                        <motion.div
+                          className="w-12 h-0.5 bg-gradient-to-r from-accent-purple to-accent-blue mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          initial={{ width: 0 }}
+                          whileHover={{ width: 48 }}
+                        />
                       </NeumorphicCard>
                     </InteractiveCard>
                   </ScrollAnimation>
@@ -477,12 +614,84 @@ const Home: React.FC = () => {
                   <AnimatedButton 
                     size="lg" 
                     variant="outline" 
-                    className="group border-white/30 text-white hover:bg-white/10"
+                    className="group border-white/30 text-white hover:bg-white/10 text-lg px-8 py-4"
                   >
+                    <Package className="mr-2 h-5 w-5" />
                     Explore Full Collection
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </AnimatedButton>
                 </Link>
+              </div>
+            </ScrollAnimation>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-32 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/10 via-accent-blue/10 to-accent-cyan/10" />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <ScrollAnimation animation="slideUp" duration={1}>
+              <div className="text-center mb-20">
+                <h2 className="text-4xl lg:text-6xl font-bold font-display text-white mb-6 glow-text">
+                  What Our Elite Say
+                </h2>
+                <p className="text-xl text-white/70">
+                  Testimonials from our distinguished clientele
+                </p>
+              </div>
+            </ScrollAnimation>
+
+            <ScrollAnimation animation="scaleIn" delay={0.3}>
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentTestimonial}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{ duration: 0.5 }}
+                    className="glass-effect rounded-3xl p-12 border border-white/20 text-center"
+                  >
+                    <div className="flex justify-center mb-6">
+                      {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                        <Star key={i} className="h-6 w-6 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                    <blockquote className="text-2xl text-white/90 mb-8 italic leading-relaxed">
+                      "{testimonials[currentTestimonial].content}"
+                    </blockquote>
+                    <div className="flex items-center justify-center space-x-4">
+                      <img
+                        src={testimonials[currentTestimonial].avatar}
+                        alt={testimonials[currentTestimonial].name}
+                        className="w-16 h-16 rounded-full border-2 border-white/20"
+                      />
+                      <div className="text-left">
+                        <p className="text-white font-semibold text-lg">
+                          {testimonials[currentTestimonial].name}
+                        </p>
+                        <p className="text-white/60">
+                          {testimonials[currentTestimonial].role}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Testimonial Indicators */}
+                <div className="flex justify-center space-x-2 mt-8">
+                  {testimonials.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentTestimonial(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentTestimonial
+                          ? 'bg-accent-purple shadow-lg'
+                          : 'bg-white/30 hover:bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </ScrollAnimation>
           </div>
@@ -497,6 +706,9 @@ const Home: React.FC = () => {
                 <h2 className="text-4xl lg:text-6xl font-bold font-display text-white mb-6 glow-text">
                   Luxury by Numbers
                 </h2>
+                <p className="text-xl text-white/70">
+                  Our commitment to excellence, measured
+                </p>
               </div>
             </ScrollAnimation>
 
@@ -507,7 +719,7 @@ const Home: React.FC = () => {
                   animation="scaleIn"
                   delay={index * 0.2}
                 >
-                  <NeumorphicCard className="text-center">
+                  <NeumorphicCard className="text-center hover:bg-white/5 transition-all duration-500">
                     <AnimatedCounter
                       end={stat.number}
                       label={stat.label}
@@ -545,20 +757,80 @@ const Home: React.FC = () => {
             </ScrollAnimation>
           </div>
         </section>
+
+        {/* CTA Section */}
+        <section className="py-32 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/30 via-accent-blue/30 to-accent-cyan/30" />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <ScrollAnimation animation="scaleIn" duration={1}>
+              <motion.div
+                className="glass-effect rounded-3xl p-16 border border-white/20"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="w-24 h-24 bg-gradient-to-r from-accent-purple to-accent-blue rounded-full flex items-center justify-center mx-auto mb-8"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                  <Crown className="h-12 w-12 text-white" />
+                </motion.div>
+                <h2 className="text-4xl lg:text-5xl font-bold font-display text-white mb-6 glow-text">
+                  Join the Elite
+                </h2>
+                <p className="text-xl text-white/70 mb-8 leading-relaxed">
+                  Become part of our exclusive community and experience luxury like never before.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <Link to="/auth">
+                    <AnimatedButton 
+                      size="lg" 
+                      variant="glow"
+                      className="text-lg px-8 py-4"
+                    >
+                      <Crown className="mr-2 h-5 w-5" />
+                      Become a Member
+                    </AnimatedButton>
+                  </Link>
+                  <Link to="/products">
+                    <AnimatedButton 
+                      variant="outline" 
+                      size="lg" 
+                      className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-4"
+                    >
+                      <Gem className="mr-2 h-5 w-5" />
+                      Browse Collection
+                    </AnimatedButton>
+                  </Link>
+                </div>
+              </motion.div>
+            </ScrollAnimation>
+          </div>
+        </section>
       </div>
 
       {/* Video Modal */}
       <Modal
         isOpen={showVideoModal}
         onClose={() => setShowVideoModal(false)}
-        title="Our Story"
+        title="Our Luxury Story"
         size="xl"
       >
-        <div className="aspect-video bg-gradient-to-r from-accent-purple to-accent-blue rounded-2xl flex items-center justify-center">
-          <div className="text-center text-white">
-            <Play className="h-16 w-16 mx-auto mb-4 opacity-80" />
-            <p className="text-xl">Video content would be embedded here</p>
-            <p className="text-white/70 mt-2">Experience the Austoc luxury story</p>
+        <div className="aspect-video bg-gradient-to-r from-accent-purple to-accent-blue rounded-2xl flex items-center justify-center relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center opacity-30"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          />
+          <div className="text-center text-white relative z-10">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Play className="h-20 w-20 mx-auto mb-6 opacity-80" />
+            </motion.div>
+            <p className="text-2xl font-semibold mb-2">The Austoc Experience</p>
+            <p className="text-white/70 text-lg">Discover our journey of luxury and excellence</p>
           </div>
         </div>
       </Modal>

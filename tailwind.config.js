@@ -63,6 +63,11 @@ export default {
         'gradient-x': 'gradientX 3s ease infinite',
         'gradient-y': 'gradientY 3s ease infinite',
         'shake': 'shake 0.5s ease-in-out',
+        'breathe': 'breathe 4s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+        'morph': 'morph 8s ease-in-out infinite',
+        'levitate': 'levitate 4s ease-in-out infinite',
+        'sparkle': 'sparkle 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -130,6 +135,32 @@ export default {
           '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
           '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
         },
+        breathe: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        },
+        glowPulse: {
+          '0%, 100%': { 
+            textShadow: '0 0 20px rgba(139, 92, 246, 0.5)',
+          },
+          '50%': { 
+            textShadow: '0 0 30px rgba(139, 92, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6)',
+          },
+        },
+        morph: {
+          '0%, 100%': { borderRadius: '1.5rem' },
+          '25%': { borderRadius: '2rem 1rem 2rem 1rem' },
+          '50%': { borderRadius: '1rem 2rem 1rem 2rem' },
+          '75%': { borderRadius: '2rem 1.5rem 1rem 2rem' },
+        },
+        levitate: {
+          '0%, 100%': { transform: 'translateY(0px) rotateX(0deg)' },
+          '50%': { transform: 'translateY(-10px) rotateX(5deg)' },
+        },
+        sparkle: {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.5', transform: 'scale(1.2)' },
+        },
       },
       backdropBlur: {
         xs: '2px',
@@ -139,6 +170,24 @@ export default {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'mesh-gradient': 'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
         'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+        'luxury-gradient': 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%)',
+        'premium-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+      },
+      screens: {
+        'xs': '475px',
+        '3xl': '1600px',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      zIndex: {
+        '60': '60',
+        '70': '70',
+        '80': '80',
+        '90': '90',
+        '100': '100',
       },
     },
   },
